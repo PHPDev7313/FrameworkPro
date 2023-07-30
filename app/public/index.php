@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use JDS\Http\Request;
+use JDS\Http\Response;
 
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -14,5 +15,9 @@ $request = Request::createFromGlobals();
 // send response (string of content)
 
 
+$content = '<h1>Hello World</h1>';
 
+$response = new Response(content: $content, status: 200, headers: []);
+
+$response->send();
 
