@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-echo "Hello World";
-
 
 
 // request received
