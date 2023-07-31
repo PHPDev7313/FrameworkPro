@@ -2,6 +2,11 @@
 
 namespace JDS\Http;
 
+/**
+ * Provide a response to the request
+ * 
+ * @package JDS\Http
+ */
 class Response
 {
 	public function __construct(

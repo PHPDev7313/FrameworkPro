@@ -1,23 +1,24 @@
 <?php
 declare(strict_types=1);
 
+use JDS\Kernel;
 use JDS\Http\Request;
-use JDS\Http\Response;
 
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-// request received
+// ***** request received *****
 $request = Request::createFromGlobals();
-// dd($request);
-// perform some logic
 
-// send response (string of content)
+// ***** perform some logic *****
+
+// ***** send response (string of content) *****
 
 
-$content = '<h1>Hello World</h1>';
+// kernel represents the core of the application
+$kernel = new Kernel();
 
-$response = new Response(content: $content, status: 200, headers: []);
+$response = $kernel->handle($request);
 
 $response->send();
 

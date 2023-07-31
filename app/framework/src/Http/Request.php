@@ -3,7 +3,7 @@
 namespace JDS\Http;
 
 /**
- * Request class
+ * Receive a request
  * 
  * @package JDS\Http
  */
