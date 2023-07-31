@@ -2,7 +2,10 @@
 
 namespace JDS\Routing;
 
+use JDS\Exceptions\HttpException;
+use JDS\Exceptions\HttpRequestMethodException;
 use JDS\Http\Request;
+use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function \FastRoute\simpleDispatcher;
 
@@ -10,6 +13,27 @@ class Router implements RouterInterface
 {
 
 	public function dispatch(Request $request) : array
+	{
+
+		$routeInfo = $this->extractRouteInfo($request);
+
+		[$handler, $vars] = $routeInfo;
+
+		if (is_array($handler)) {
+			[$controller, $method] = $handler;
+			$handler = [new $controller, $method];
+		}
+
+		return [$handler, $vars];
+		// [$status, [$controller, $method], $vars] = $routeInfo;
+
+		// // ***** Call the handler, provided by the route info, in order to create a Response *****
+
+		// return [[new $controller, $method], $vars];
+
+	}
+
+	private function extractRouteInfo(Request $request) : array
 	{
 		// ***** Create a dispatcher *****
 		$dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
@@ -33,13 +57,17 @@ class Router implements RouterInterface
 			$request->getPathInfo()
 		);
 
+		switch ($routeInfo[0]) {
+			case Dispatcher::FOUND:
+				return [$routeInfo[1], $routeInfo[2]];
 
-		[$status, [$controller, $method], $vars] = $routeInfo;
+			case Dispatcher::METHOD_NOT_ALLOWED:
+				$allowedMethods = implode(', ', $routeInfo[1]);
+				throw new HttpRequestMethodException("The allowed methods are $allowedMethods");
 
-		// ***** Call the handler, provided by the route info, in order to create a Response *****
-
-		return [[new $controller, $method], $vars];
-
+			default:
+				throw new HttpException("Not found!");
+		}
 	}
 }
 
