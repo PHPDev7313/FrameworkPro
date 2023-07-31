@@ -2,10 +2,12 @@
 
 namespace JDS;
 
-use \Exception;
+use Exception;
 use JDS\Http\Request;
 use JDS\Http\Response;
 use JDS\Routing\Router;
+use JDS\Exceptions\HttpException;
+use JDS\Exceptions\HttpRequestMethodException;
 
 /**
  * Core of the application
@@ -37,10 +39,10 @@ class Kernel
 
 			$response = call_user_func_array($routeHandler, $vars);
 
+		} catch (HttpException $exception) {
+			$response = new Response($exception->getMessage(), $exception->getStatusCode());
 		} catch (Exception $exception) {
-
-			$response = new Response($exception->getMessage(), 400);
-
+			$response = new Response($exception->getMessage(), 500);
 		}
 
 		return $response;
