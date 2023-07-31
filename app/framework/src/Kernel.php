@@ -27,24 +27,17 @@ class Kernel
 
 		// ***** Create a dispatcher *****
 		$dispatcher = \FastRoute\simpleDispatcher(function (RouteCollector $routeCollector) {
-			$routeCollector->addRoute('GET', '/', function () {
-				$content = '<h1>This is from the Kernel</h1>';
 
-				return new Response($content);
+			$routes = include BASE_PATH . '/routes/web.php';
+			foreach ($routes as $route) {
+				// unpack the array with ... and use the variable $route from foreach
+				$routeCollector->addRoute(...$route);
+			}
 
-			});
 
-			$routeCollector->addRoute('GET', '/posts/{id:\d+}', function ($routeParams) {
-				$content = "<h1>This is Post {$routeParams['id']}</h1>";
 
-				return new Response($content);
-			});
-			// this will allow [a-zA-Z0-9] no special characters
-			$routeCollector->addRoute('GET', '/user/{userid:\w+}', function ($routeParams) {
-				$content = "<h1>This is Post {$routeParams['userid']}</h1>";
 
-				return new Response($content);
-			});
+
 
 		});
 
@@ -59,13 +52,14 @@ class Kernel
 			$request->getMethod(),
 			$request->getPathInfo()
 		);
-
-		[$status, $handler, $vars] = $routeInfo;
-
-
 		
-		// ***** Call the handler, provided by the route info, in order to create a Response *****
-		return $handler($vars);
 
+		[$status, [$controller, $method], $vars] = $routeInfo;
+	
+		// ***** Call the handler, provided by the route info, in order to create a Response *****
+		$response = (new $controller())->$method($vars);
+
+		return $response;
 	}
 }
+
