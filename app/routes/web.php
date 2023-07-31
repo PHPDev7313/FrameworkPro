@@ -1,7 +1,8 @@
 <?php 
 // [Get method, URI, [Controller, Method, title]]
 return [
-	['GET', '/', [\App\Controller\HomeController::class, 'index']]
+	['GET', '/', [\App\Controller\HomeController::class, 'index']],
+	['GET', '/posts/{id:\d+}', [\App\Controller\PostsController::class, 'show']]
 ];
 
 
