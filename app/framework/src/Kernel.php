@@ -2,9 +2,10 @@
 
 namespace JDS;
 
-use FastRoute\RouteCollector;
+use \Exception;
 use JDS\Http\Request;
 use JDS\Http\Response;
+use JDS\Routing\Router;
 
 /**
  * Core of the application
@@ -17,48 +18,30 @@ use JDS\Http\Response;
 class Kernel
 {
 
+	public function __construct(private Router $router) 
+	{
+		
+	}
+
 	/**
 	 * handle the requests
 	 * 
 	 * @param Request $request 
 	 * @return Response 
 	 */
-	public function handle(Request $request) : Response {
+	public function handle(Request $request) : Response 
+	{
 
-		// ***** Create a dispatcher *****
-		$dispatcher = \FastRoute\simpleDispatcher(function (RouteCollector $routeCollector) {
+		try {
+			[$routeHandler, $vars] = $this->router->dispatch($request);
 
-			$routes = include BASE_PATH . '/routes/web.php';
-			foreach ($routes as $route) {
-				// unpack the array with ... and use the variable $route from foreach
-				$routeCollector->addRoute(...$route);
-			}
+			$response = call_user_func_array($routeHandler, $vars);
 
+		} catch (Exception $exception) {
 
+			$response = new Response($exception->getMessage(), 400);
 
-
-
-
-		});
-
-		// ***** Dispatch a URI, to obtain the route info *****
-			// three things we want back, Status, Handler and any variables
-			// dispatch requires 2 pieces of information
-				// 1. httpMethod
-				// 2. uri
-				// both can be found in the request
-
-		$routeInfo = $dispatcher->dispatch(
-			$request->getMethod(),
-			$request->getPathInfo()
-		);
-		
-
-		[$status, [$controller, $method], $vars] = $routeInfo;
-	
-		// ***** Call the handler, provided by the route info, in order to create a Response *****
-
-		$response = call_user_func_array([new $controller, $method], $vars);
+		}
 
 		return $response;
 	}
