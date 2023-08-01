@@ -1,22 +1,5 @@
 {
-	"name": "jds/app",
-	"description": "Designing the basic framework through designing the Application along with it",
 	"minimum-stability": "dev",
-	"license": "BDS 3-Clause",
-	"authors": [
-		{
-			"name": "Mr J",
-			"email": "phpdeveloper@mail.com",
-			"role": "Owner",
-			"homepage": "http://jessdigisys.com"
-		}
-	],
-	"repositories": [
-		{
-			"type": "path",
-			"url": "framework"
-		}
-	],
 	"require": {
 		"php": ">=8.0",
 		"ext-pdo": "*",

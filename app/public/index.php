@@ -5,9 +5,9 @@ declare(strict_types=1);
 define('BASE_PATH', dirname(__DIR__));
 
 require_once BASE_PATH . '/vendor/autoload.php';
-use JDSFramework\Kernel;
-use JDSFramework\Http\Request;
-use JDSFramework\Routing\Router;
+use JDS\Kernel;
+use JDS\Http\Request;
+use JDS\Routing\Router;
 
 
 
