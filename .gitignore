@@ -3,4 +3,9 @@
 .env
 database.env
 app/vendor
-composer.lock
+app/composer.lock
+tokens
+framework
+
+
+
