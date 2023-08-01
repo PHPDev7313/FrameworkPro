@@ -1,7 +1,7 @@
 {
 	"minimum-stability": "dev",
 	"require": {
-		"php": ">=8.0",
+		"php": ">=8.2",
 		"ext-pdo": "*",
 		"ext-pdo_mysql": "*",
 		"jds/framework": "dev-master"
