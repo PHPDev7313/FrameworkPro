@@ -1,4 +1,5 @@
 <?php
+use JDS\Controller\AbstractController;
 
 $dotenv = new Symfony\Component\Dotenv\Dotenv();
 $dotenv->load(BASE_PATH . '/.env');
@@ -48,15 +49,17 @@ $container->addShared('filesystem-loader', Twig\Loader\FilesystemLoader::class)
 $container->addShared('twig', Twig\Environment::class)
 	->addArgument('filesystem-loader');
 
-// using inflectors
-// https://container.thephpleague.com
 $container->add(JDS\Controller\AbstractController::class);
 
+// using inflectors
+// https://container.thephpleague.com
 // pass the container into the abstract class which will
 // allow is to use twig through the container
-$container->inflector(App\Controller\AbstractController::class)
-	->invokeMethod('setContainer', [$container])
-;
+$container->inflector(App\Controller\HomeController::class)
+	->invokeMethod('setContainer', [$container]);
+
+$container->inflector(App\Controller\PostsController::class)
+	->invokeMethod('setContainer', [$container]);
 
 return $container;
 
