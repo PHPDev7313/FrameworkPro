@@ -19,5 +19,23 @@ services:
         - ./coder/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       extra_hosts:
         - host.docker.internal:host-gateway
+      environment:
+        MYSQL_HOST: db
+        MYSQL_PORT: ${MYSQL_PORT}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
 
+    db:
+      image: mariadb:lts
+      volumes:
+        - frameworkpro:/var/lib/mysql
+      ports:
+        - "3606:3306"
+      restart: unless-stopped
+      env_file:
+        - database.env
 
+volumes:
+  frameworkpro:
+ 
