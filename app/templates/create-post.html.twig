@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="grid-container">
+	<div class="grid-x grid-padding-x">
+		<div class="large-12 medium-12 small-up-2 cell">
+			<h3 class="text-center">Add A Post</h3>
+		
+				<form>
+					<div class="grid-container">
+						<div class="grid-x grid-padding-x">
+							<div class="large-6 medium-6 small-up-2 large-offset-3 medium-offset-3 cell">
+								<div class="callout">
+									<label>Title
+										<input type="text" id="title" name="title" aria-describedby="titleHelp" placeholder="Title">
+									</label>
+									<div id="titleHelp" class="help-text">Give your post a catchy title</div>
+									<label>Body
+										<textarea name="body" id="body" rows="10"></textarea>
+									</label>
+									<div class="text-left">
+										<button type="submit" class="button">Submit</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			
+		</div>
+	</div>
+</div>
+{% endblock %}
