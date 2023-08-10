@@ -44,14 +44,14 @@ FROM app as app_dev
 
 # Xdebug has different modes / functionalities. We can default to 'off' and set to 'debug'
 # when we run docker compose up if we need it
-ENV XDEBUG_MODE=off
+#ENV XDEBUG_MODE=off
 
 # Copy xdebug config file into container
-COPY ./coder/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+#COPY ./coder/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install xdebug
-RUN set -eux; \
-	install-php-extensions xdebug
+#RUN set -eux; \
+#	install-php-extensions xdebug
 
 
 
