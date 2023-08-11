@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+use JDS\Console\Kernel;
+
+// set a base path
+
+define('BASE_PATH', dirname(__DIR__));
+
+// require autoloading
+require_once BASE_PATH . '/vendor/autoload.php';
+
+// require the container
+/** @var \Psr\Container\ContainerInterface $container */
+$container = require BASE_PATH . '/config/services.php';
+
+// get the Console Kernel from the container
+$kernel = $container->get(Kernel::class);
+
+// call a handle method on the Kernel, return the console application status
+$status = $kernel->handle();
+
+// exit with that status
+exit(($status == 0) ? "OK":"Error");

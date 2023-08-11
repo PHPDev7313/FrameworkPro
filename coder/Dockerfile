@@ -7,6 +7,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 # Install php extensions
 # exit on errors, exit on unset variables, print every command as it is executed
+# pdo_sqlite is enabled by default https://www.php.net/manual/en/ref.pdo-sqlite.php
 RUN set -eux; \
 	install-php-extensions pdo pdo_mysql;
 

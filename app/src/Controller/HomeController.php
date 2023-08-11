@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Widget;
-use JDS\Controller\AbstractController;
 use Twig\Environment;
 use JDS\Http\Response;
+use JDS\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -18,6 +18,6 @@ class HomeController extends AbstractController
 
 	public function index(): Response
 	{
-		return $this->render('home.html.twig');
+		return $this->render('home.html.twig', [$this->container->get('filesystem-loader')]);
 	}
 }
